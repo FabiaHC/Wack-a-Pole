@@ -8,6 +8,9 @@ class MoleHole():
         self.__x = ( (number)  % 3 ) * self.__width #x Blit Position
         self.__y = ( (number) // 3 ) * self.__height #y Blit Position
 
+    def getBlitPos(self):
+        return (self.__x, self.__y)
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
@@ -15,6 +18,8 @@ def main():
     done = False
     pygame.display.set_caption('Wack a Pole!')
     clock = pygame.time.Clock()
+
+    moleHoleImg = pygame.image.load("assets/ground_hole.png")
 
     moleHoles = []
     for i in range(9):
@@ -27,6 +32,10 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     done = True
+
+        screen.fill((255, 255, 255))
+        for hole in moleHoles:
+            screen.blit(moleHoleImg, hole.getBlitPos())
 
         pygame.display.update()
         clock.tick(60)

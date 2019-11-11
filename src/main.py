@@ -11,6 +11,8 @@ class MoleHole():
     def getBlitPos(self):
         return (self.__x, self.__y)
 
+
+
 def inGame(events, screen, moleHoles, moleHoleImg):
     done = False
 
@@ -27,6 +29,8 @@ def inGame(events, screen, moleHoles, moleHoleImg):
 
     return done
 
+
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
@@ -35,6 +39,7 @@ def main():
     pygame.display.set_caption('Wack a Pole!')
     clock = pygame.time.Clock()
 
+    #Assets
     moleHoleImg = pygame.image.load("assets/ground_hole.png")
     moleHoleImg = pygame.transform.scale(moleHoleImg, (x // 3, y // 4))
 
@@ -49,6 +54,10 @@ def main():
         clock.tick(60)
 
     print("END")
+
+
+
+
 
 if __name__ == "__main__":
     main()

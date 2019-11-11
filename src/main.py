@@ -7,6 +7,7 @@ class MoleHole():
         self.__height = screenY // 4 #Take up 1/4 of y width
         self.__x = ( (number)  % 3 ) * self.__width #x Blit Position
         self.__y = ( (number) // 3 ) * self.__height + self.__height #y Blit Position
+        self.rect = pygame.Rect(self.__x, self.__y, self.__width, self.__height)
 
     def getBlitPos(self):
         return (self.__x, self.__y)

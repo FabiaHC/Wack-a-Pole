@@ -11,6 +11,22 @@ class MoleHole():
     def getBlitPos(self):
         return (self.__x, self.__y)
 
+def inGame(events, screen, moleHoles, moleHoleImg):
+    done = False
+
+    for event in events:
+        if event.type == pygame.QUIT:
+            done = True
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                done = True
+
+    screen.fill((255, 255, 255))
+    for hole in moleHoles:
+        screen.blit(moleHoleImg, hole.getBlitPos())
+
+    return done
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
@@ -27,17 +43,8 @@ def main():
         moleHoles.append( MoleHole( x, y, i ) )
 
     while not done:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                done = True
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    done = True
-
-        screen.fill((255, 255, 255))
-        for hole in moleHoles:
-            screen.blit(moleHoleImg, hole.getBlitPos())
-
+        events = pygame.event.get()
+        done = inGame(events, screen, moleHoles, moleHoleImg)
         pygame.display.update()
         clock.tick(60)
 

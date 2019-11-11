@@ -14,21 +14,41 @@ class MoleHole():
 
 
 
-def inGame(events, screen, moleHoles, moleHoleImg):
-    done = False
 
-    for event in events:
-        if event.type == pygame.QUIT:
-            done = True
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
+
+class Scene():
+    def __init__(self, screen):
+        self.__screen = screen
+
+    def setScene(self, sceneName):
+        self.__scene = sceneName
+
+    def loop(self, events):
+        self.__events = events
+        if self.__scene == "inGame":
+            return self.inGame()
+
+    def setInGameScene(self, moleHoles, moleHoleImg):
+        self.__moleHoles = moleHoles
+        self.__moleHoleImg = moleHoleImg
+
+    def inGame(self):
+        done = False
+
+        for event in self.__events:
+            if event.type == pygame.QUIT:
                 done = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    done = True
 
-    screen.fill((255, 255, 255))
-    for hole in moleHoles:
-        screen.blit(moleHoleImg, hole.getBlitPos())
+        self.__screen.fill((255, 255, 255))
+        for hole in self.__moleHoles:
+            self.__screen.blit(self.__moleHoleImg, hole.getBlitPos())
 
-    return done
+        return done
+
+
 
 
 
@@ -47,10 +67,13 @@ def main():
     moleHoles = []
     for i in range(9):
         moleHoles.append( MoleHole( x, y, i ) )
+    scene = Scene(screen)
+    scene.setInGameScene(moleHoles, moleHoleImg)
+    scene.setScene("inGame")
 
     while not done:
         events = pygame.event.get()
-        done = inGame(events, screen, moleHoles, moleHoleImg)
+        done = scene.loop(events)
         pygame.display.update()
         clock.tick(60)
 

@@ -26,13 +26,15 @@ class Scene():
     def loop(self, events):
         self.__events = events
         if self.__scene == "inGame":
-            return self.inGame()
+            return self.__inGame()
+        elif self.__scene == "menu":
+            return self.__menu()
 
     def setInGameScene(self, moleHoles, moleHoleImg):
         self.__moleHoles = moleHoles
         self.__moleHoleImg = moleHoleImg
 
-    def inGame(self):
+    def __inGame(self):
         done = False
 
         for event in self.__events:
@@ -47,6 +49,34 @@ class Scene():
             self.__screen.blit(self.__moleHoleImg, hole.getBlitPos())
 
         return done
+
+    def __menu(self):
+        done = False
+
+        for event in self.__events:
+            if event.type == pygame.QUIT:
+                done = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    done = True
+
+        self.__screen.fill((255, 255, 255))
+
+        return done
+
+
+
+
+
+class TextBox():
+    def __init__(self, size, pos, text):
+        font = pygame.font.Font('Comic Sans MS', size)
+        self.__textSurface = font.render(text, True, (0,0,0))
+        self.__textRect = self.__textSurface.get_rect()
+        self.__pos = pos
+
+    def getPos(self):
+        return self.__pos
 
 
 
@@ -69,7 +99,7 @@ def main():
         moleHoles.append( MoleHole( x, y, i ) )
     scene = Scene(screen)
     scene.setInGameScene(moleHoles, moleHoleImg)
-    scene.setScene("inGame")
+    scene.setScene("menu")
 
     while not done:
         events = pygame.event.get()

@@ -4,9 +4,9 @@ import random
 class MoleHole():
     def __init__(self, screenX, screenY, number):
         self.__width = screenX // 3 #Take up 1/3 of x width
-        self.__height = screenY // 3 #Take up 1/3 of y width
+        self.__height = screenY // 4 #Take up 1/4 of y width
         self.__x = ( (number)  % 3 ) * self.__width #x Blit Position
-        self.__y = ( (number) // 3 ) * self.__height #y Blit Position
+        self.__y = ( (number) // 3 ) * self.__height + self.__height #y Blit Position
 
     def getBlitPos(self):
         return (self.__x, self.__y)
@@ -20,6 +20,7 @@ def main():
     clock = pygame.time.Clock()
 
     moleHoleImg = pygame.image.load("assets/ground_hole.png")
+    moleHoleImg = pygame.transform.scale(moleHoleImg, (x // 3, y // 4))
 
     moleHoles = []
     for i in range(9):

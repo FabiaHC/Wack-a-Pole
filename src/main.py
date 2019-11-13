@@ -40,7 +40,10 @@ class Scene():
             self.__moleHoles.append( MoleHole( x, y, i ) )
 
     def setMenuScene(self):
-        self.__startButton = TextBox(100, (300, 300), "Start")
+        x, y = self.__screen.get_size()
+        x //= 100 #One percent of pixels in the x axis
+        y //= 100 #One percent of pixels in the y axis
+        self.__startButton = TextBox(20, [50, 15], "Start", (x, y))
 
     def __inGame(self):
         done = False
@@ -78,10 +81,13 @@ class Scene():
 
 
 class TextBox():
-    def __init__(self, size, pos, text):
-        font = pygame.font.Font('assets/burnstown dam.ttf', size)
+    def __init__(self, size, pos, text, screenPercentage):
+        font = pygame.font.Font('assets/burnstown dam.ttf', size*screenPercentage[1])
         self.__textSurface = font.render(text, True, (0,0,0))
         self.__textRect = self.__textSurface.get_rect()
+        rectSize = self.__textSurface.get_size()
+        pos[0] = pos[0] * screenPercentage[0] - rectSize[0] // 2
+        pos[1] = pos[1] * screenPercentage[1] - rectSize[1] // 2
         self.__textRect.move_ip(pos[0], pos[1])
         self.__pos = pos
 

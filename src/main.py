@@ -70,6 +70,10 @@ class Scene():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     done = True
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = event.pos
+                if self.__startButton.getRect().collidepoint(x, y):
+                    print("Start")
 
         self.__screen.fill((255, 255, 255))
         self.__startButton.blit(self.__screen)
@@ -94,6 +98,9 @@ class TextBox():
     def blit(self, screen):
         pygame.draw.rect(screen, (0, 0, 0), self.__textRect, 3)
         screen.blit(self.__textSurface, self.__pos)
+
+    def getRect(self):
+        return self.__textRect
 
 
 

@@ -30,9 +30,14 @@ class Scene():
         elif self.__scene == "menu":
             return self.__menu()
 
-    def setInGameScene(self, moleHoles, moleHoleImg):
-        self.__moleHoles = moleHoles
-        self.__moleHoleImg = moleHoleImg
+    def setInGameScene(self):
+        x, y = self.__screen.get_size()
+        self.__moleHoleImg = pygame.image.load("assets/ground_hole.png")
+        self.__moleHoleImg = pygame.transform.scale(self.__moleHoleImg, (x // 3, y // 4))
+
+        self.__moleHoles = []
+        for i in range(9):
+            self.__moleHoles.append( MoleHole( x, y, i ) )
 
     def __inGame(self):
         done = False
@@ -90,16 +95,9 @@ def main():
     pygame.display.set_caption('Wack a Pole!')
     clock = pygame.time.Clock()
 
-    #Assets
-    moleHoleImg = pygame.image.load("assets/ground_hole.png")
-    moleHoleImg = pygame.transform.scale(moleHoleImg, (x // 3, y // 4))
-
-    moleHoles = []
-    for i in range(9):
-        moleHoles.append( MoleHole( x, y, i ) )
     scene = Scene(screen)
-    scene.setInGameScene(moleHoles, moleHoleImg)
-    scene.setScene("menu")
+    scene.setInGameScene()
+    scene.setScene("inGame")
 
     while not done:
         events = pygame.event.get()

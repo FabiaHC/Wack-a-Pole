@@ -39,6 +39,9 @@ class Scene():
         for i in range(9):
             self.__moleHoles.append( MoleHole( x, y, i ) )
 
+    def setMenuScene(self):
+        self.__startButton = TextBox(100, (300, 300), "Start")
+
     def __inGame(self):
         done = False
 
@@ -66,6 +69,7 @@ class Scene():
                     done = True
 
         self.__screen.fill((255, 255, 255))
+        self.__startButton.blit(self.__screen)
 
         return done
 
@@ -75,14 +79,15 @@ class Scene():
 
 class TextBox():
     def __init__(self, size, pos, text):
-        font = pygame.font.Font('Comic Sans MS', size)
+        font = pygame.font.Font('assets/burnstown dam.ttf', size)
         self.__textSurface = font.render(text, True, (0,0,0))
         self.__textRect = self.__textSurface.get_rect()
+        self.__textRect.move_ip(pos[0], pos[1])
         self.__pos = pos
 
-    def getPos(self):
-        return self.__pos
-
+    def blit(self, screen):
+        pygame.draw.rect(screen, (0, 0, 0), self.__textRect, 3)
+        screen.blit(self.__textSurface, self.__pos)
 
 
 
@@ -97,7 +102,8 @@ def main():
 
     scene = Scene(screen)
     scene.setInGameScene()
-    scene.setScene("inGame")
+    scene.setMenuScene()
+    scene.setScene("menu")
 
     while not done:
         events = pygame.event.get()

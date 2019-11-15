@@ -45,6 +45,7 @@ class Scene():
         y //= 100 #One percent of pixels in the y axis
         self.buttons = {}
         self.buttons["start"] = TextBox(20, [50, 15], "Start", (x, y))
+        self.buttons["quit"] = TextBox(20, [50, 70], "Quit", (x, y))
 
     def __inGame(self):
         done = False
@@ -76,6 +77,8 @@ class Scene():
                 if self.buttons["start"].getRect().collidepoint(x, y):
                     self.setInGameScene()
                     self.setScene("inGame")
+                if self.buttons["quit"].getRect().collidepoint(x, y):
+                    done = True
 
         self.__screen.fill((255, 255, 255))
         for button in self.buttons:

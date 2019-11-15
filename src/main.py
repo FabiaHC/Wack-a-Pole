@@ -43,7 +43,8 @@ class Scene():
         x, y = self.__screen.get_size()
         x //= 100 #One percent of pixels in the x axis
         y //= 100 #One percent of pixels in the y axis
-        self.__startButton = TextBox(20, [50, 15], "Start", (x, y))
+        self.buttons = {}
+        self.buttons["start"] = TextBox(20, [50, 15], "Start", (x, y))
 
     def __inGame(self):
         done = False
@@ -77,7 +78,8 @@ class Scene():
                     self.setScene("inGame")
 
         self.__screen.fill((255, 255, 255))
-        self.__startButton.blit(self.__screen)
+        for button in self.buttons:
+            self.buttons[button].blit(self.__screen)
 
         return done
 

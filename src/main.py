@@ -73,7 +73,7 @@ class Scene():
                     done = True
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
-                if self.__startButton.getRect().collidepoint(x, y):
+                if self.buttons["start"].getRect().collidepoint(x, y):
                     self.setInGameScene()
                     self.setScene("inGame")
 

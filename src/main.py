@@ -44,8 +44,8 @@ class Scene():
         x //= 100 #One percent of pixels in the x axis
         y //= 100 #One percent of pixels in the y axis
         self.buttons = {}
-        self.buttons["start"] = TextBox(20, [50, 15], "Start", (x, y))
-        self.buttons["quit"] = TextBox(20, [50, 70], "Quit", (x, y))
+        self.buttons["start"] = TextBox(20, [50, 35], "Start", (x, y))
+        self.buttons["quit"] = TextBox(20, [50, 85], "Quit", (x, y))
 
     def __inGame(self):
         done = False

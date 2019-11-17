@@ -39,6 +39,8 @@ class Scene():
         for i in range(9):
             self.__moleHoles.append( MoleHole( x, y, i ) )
 
+        self.__initialTicks = pygame.time.get_ticks()
+
     def setMenuScene(self):
         x, y = self.__screen.get_size()
         x //= 100 #One percent of pixels in the x axis
@@ -49,6 +51,11 @@ class Scene():
 
     def __inGame(self):
         done = False
+
+        if ((pygame.time.get_ticks() - self.__initialTicks) / 1000) > 10:
+            print("menu")
+            self.setMenuScene()
+            self.setScene("menu")
 
         for event in self.__events:
             if event.type == pygame.QUIT:

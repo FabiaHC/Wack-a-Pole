@@ -29,11 +29,15 @@ class Scene():
             return self.__inGame()
         elif self.__scene == "menu":
             return self.__menu()
+        elif self.__scene == "score":
+            return self.__scoreDisplay()
 
     def setInGameScene(self):
         x, y = self.__screen.get_size()
         self.__moleHoleImg = pygame.image.load("assets/ground_hole.png")
         self.__moleHoleImg = pygame.transform.scale(self.__moleHoleImg, (x // 3, y // 4))
+
+        self.__score = 0
 
         self.__moleHoles = []
         for i in range(9):
@@ -49,13 +53,19 @@ class Scene():
         self.buttons["start"] = TextBox(20, [50, 35], "Start", (x, y))
         self.buttons["quit"] = TextBox(20, [50, 85], "Quit", (x, y))
 
+    def setScoreScene(self):
+        x, y = self.__screen.get_size()
+        x //= 100 #One percent of pixels in the x axis
+        y //= 100 #One percent of pixels in the y axis
+        self.__scoreText = TextBox(35, [50, 20], "Score: " + str(self.__score), (x, y))
+        self.__continueText = TextBox(10, [50, 65], "Press enter to continue", (x, y))
+
     def __inGame(self):
         done = False
 
-        if ((pygame.time.get_ticks() - self.__initialTicks) / 1000) > 10:
-            print("menu")
-            self.setMenuScene()
-            self.setScene("menu")
+        if ((pygame.time.get_ticks() - self.__initialTicks) / 1000) > 1:
+            self.setScoreScene()
+            self.setScene("score")
 
         for event in self.__events:
             if event.type == pygame.QUIT:
@@ -93,6 +103,24 @@ class Scene():
 
         return done
 
+    def __scoreDisplay(self):
+        done = False
+
+        for event in self.__events:
+            if event.type == pygame.QUIT:
+                done = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    done = True
+                if event.key == pygame.K_RETURN:
+                    self.setMenuScene()
+                    self.setScene("menu")
+
+        self.__screen.fill((255, 255, 255))
+        self.__scoreText.blit(self.__screen)
+        self.__continueText.blit(self.__screen)
+
+        return done
 
 
 

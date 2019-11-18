@@ -88,12 +88,13 @@ class Scene():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     done = True
-                if [263, 264, 265, 260, 261, 262, 257, 258, 259].index(event.key) == self.__moleNumber:
-                    self.__score += 1
-                    self.__moleNumber = random.randint(0, 8)
-                else:
-                    if self.__score > 0:
-                        self.__score -= 1
+                if event.key >= 257 and event.key <= 265:
+                    if [263, 264, 265, 260, 261, 262, 257, 258, 259].index(event.key) == self.__moleNumber:
+                        self.__score += 1
+                        self.__moleNumber = random.randint(0, 8)
+                    else:
+                        if self.__score > 0:
+                            self.__score -= 1
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
                 for moleHole in self.__moleHoles:

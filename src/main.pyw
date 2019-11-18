@@ -142,7 +142,7 @@ class Scene():
                     self.__maxTime = 10
                 if self.buttons["30"].getRect().collidepoint(x, y):
                     self.__maxTime = 30
-                if self.buttons["10"].getRect().collidepoint(x, y):
+                if self.buttons["60"].getRect().collidepoint(x, y):
                     self.__maxTime = 60
                 if self.buttons["toggleMusic"].getRect().collidepoint(x, y):
                     if self.__musicPlaying:

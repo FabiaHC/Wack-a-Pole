@@ -27,9 +27,6 @@ class Scene():
     def __init__(self, screen):
         self.__screen = screen
 
-    def setScene(self, sceneName):
-        self.__scene = sceneName
-
     def loop(self, events):
         self.__events = events
         if self.__scene == "inGame":
@@ -40,6 +37,7 @@ class Scene():
             return self.__scoreDisplay()
 
     def setInGameScene(self):
+        self.__scene = "inGame"
         x, y = self.__screen.get_size()
         self.__moleHoleImg = pygame.image.load("assets/ground_hole.png")
         self.__moleHoleImg = pygame.transform.scale(self.__moleHoleImg, (x // 3, y // 4))
@@ -56,6 +54,7 @@ class Scene():
         self.__initialTicks = pygame.time.get_ticks()
 
     def setMenuScene(self):
+        self.__scene = "menu"
         x, y = self.__screen.get_size()
         x //= 100 #One percent of pixels in the x axis
         y //= 100 #One percent of pixels in the y axis
@@ -64,6 +63,7 @@ class Scene():
         self.buttons["quit"] = TextBox(20, [50, 85], "Quit", (x, y))
 
     def setScoreScene(self):
+        self.__scene = "score"
         x, y = self.__screen.get_size()
         x //= 100 #One percent of pixels in the x axis
         y //= 100 #One percent of pixels in the y axis
@@ -75,7 +75,6 @@ class Scene():
 
         if ((pygame.time.get_ticks() - self.__initialTicks) / 1000) > 10:
             self.setScoreScene()
-            self.setScene("score")
 
         x, y = self.__screen.get_size()
         x //= 100 #One percent of pixels in the x axis
@@ -131,7 +130,6 @@ class Scene():
                 x, y = event.pos
                 if self.buttons["start"].getRect().collidepoint(x, y):
                     self.setInGameScene()
-                    self.setScene("inGame")
                 if self.buttons["quit"].getRect().collidepoint(x, y):
                     done = True
 
@@ -152,7 +150,6 @@ class Scene():
                     done = True
                 if event.key == pygame.K_RETURN:
                     self.setMenuScene()
-                    self.setScene("menu")
 
         self.__screen.fill((255, 255, 255))
         self.__finalScoreText.blit(self.__screen)
@@ -195,7 +192,6 @@ def main():
     scene = Scene(screen)
     scene.setInGameScene()
     scene.setMenuScene()
-    scene.setScene("menu")
 
     while not done:
         events = pygame.event.get()

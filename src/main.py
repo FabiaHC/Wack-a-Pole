@@ -26,6 +26,7 @@ class MoleHole():
 class Scene():
     def __init__(self, screen):
         self.__screen = screen
+        self.__maxTime = 10
 
     def loop(self, events):
         self.__events = events
@@ -61,6 +62,9 @@ class Scene():
         self.buttons = {}
         self.buttons["start"] = TextBox(20, [50, 35], "Start", (x, y))
         self.buttons["quit"] = TextBox(20, [50, 85], "Quit", (x, y))
+        self.buttons["10"] = TextBox(10, [40, 60], "10s", (x, y))
+        self.buttons["30"] = TextBox(10, [50, 60], "30s", (x, y))
+        self.buttons["60"] = TextBox(10, [60, 60], "60s", (x, y))
 
     def setScoreScene(self):
         self.__scene = "score"
@@ -73,7 +77,7 @@ class Scene():
     def __inGame(self):
         done = False
 
-        if ((pygame.time.get_ticks() - self.__initialTicks) / 1000) > 10:
+        if ((pygame.time.get_ticks() - self.__initialTicks) / 1000) > self.__maxTime:
             self.setScoreScene()
 
         x, y = self.__screen.get_size()
@@ -132,6 +136,12 @@ class Scene():
                     self.setInGameScene()
                 if self.buttons["quit"].getRect().collidepoint(x, y):
                     done = True
+                if self.buttons["10"].getRect().collidepoint(x, y):
+                    self.__maxTime = 10
+                if self.buttons["30"].getRect().collidepoint(x, y):
+                    self.__maxTime = 30
+                if self.buttons["10"].getRect().collidepoint(x, y):
+                    self.__maxTime = 60
 
         self.__screen.fill((255, 255, 255))
         for button in self.buttons:

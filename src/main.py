@@ -37,6 +37,10 @@ class Scene():
         self.__moleHoleImg = pygame.image.load("assets/ground_hole.png")
         self.__moleHoleImg = pygame.transform.scale(self.__moleHoleImg, (x // 3, y // 4))
 
+        self.__moleImg = pygame.image.load("assets/pope.png")
+        self.__moleImg = pygame.transform.scale(self.__moleImg, (x // 6, y // 8))
+        self.__moleNumber = random.randint(0, 8)
+        self.__molePosOffset = (x//12, y//80)
         self.__score = 0
 
         self.__moleHoles = []
@@ -63,7 +67,7 @@ class Scene():
     def __inGame(self):
         done = False
 
-        if ((pygame.time.get_ticks() - self.__initialTicks) / 1000) > 1:
+        if ((pygame.time.get_ticks() - self.__initialTicks) / 1000) > 10:
             self.setScoreScene()
             self.setScene("score")
 
@@ -77,6 +81,11 @@ class Scene():
         self.__screen.fill((255, 255, 255))
         for hole in self.__moleHoles:
             self.__screen.blit(self.__moleHoleImg, hole.getBlitPos())
+        molePosition = self.__moleHoles[self.__moleNumber].getBlitPos()
+        molePosition = list(molePosition)
+        molePosition[0] += self.__molePosOffset[0]
+        molePosition[1] += self.__molePosOffset[1]
+        self.__screen.blit(self.__moleImg, molePosition)
 
         return done
 

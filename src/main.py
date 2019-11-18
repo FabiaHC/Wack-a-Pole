@@ -184,7 +184,6 @@ class TextBox():
 def main():
     pygame.init()
     screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
-    x, y = screen.get_size()
     done = False
     pygame.display.set_caption('Wack a Pole!')
     clock = pygame.time.Clock()

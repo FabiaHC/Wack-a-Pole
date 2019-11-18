@@ -27,6 +27,7 @@ class Scene():
     def __init__(self, screen):
         self.__screen = screen
         self.__maxTime = 10
+        self.__musicPlaying = True
 
     def loop(self, events):
         self.__events = events
@@ -60,11 +61,12 @@ class Scene():
         x //= 100 #One percent of pixels in the x axis
         y //= 100 #One percent of pixels in the y axis
         self.buttons = {}
-        self.buttons["start"] = TextBox(20, [50, 35], "Start", (x, y))
-        self.buttons["quit"] = TextBox(20, [50, 85], "Quit", (x, y))
-        self.buttons["10"] = TextBox(10, [40, 60], "10s", (x, y))
-        self.buttons["30"] = TextBox(10, [50, 60], "30s", (x, y))
-        self.buttons["60"] = TextBox(10, [60, 60], "60s", (x, y))
+        self.buttons["start"] = TextBox(20, [50, 15], "Start", (x, y))
+        self.buttons["quit"] = TextBox(20, [50, 40], "Quit", (x, y))
+        self.buttons["10"] = TextBox(10, [40, 70], "10s", (x, y))
+        self.buttons["30"] = TextBox(10, [50, 70], "30s", (x, y))
+        self.buttons["60"] = TextBox(10, [60, 70], "60s", (x, y))
+        self.buttons["toggleMusic"] = TextBox(15, [50, 90], "Toggle Music", (x, y))
 
     def setScoreScene(self):
         self.__scene = "score"
@@ -142,6 +144,12 @@ class Scene():
                     self.__maxTime = 30
                 if self.buttons["10"].getRect().collidepoint(x, y):
                     self.__maxTime = 60
+                if self.buttons["toggleMusic"].getRect().collidepoint(x, y):
+                    if self.__musicPlaying:
+                        pygame.mixer.music.pause()
+                    else:
+                        pygame.mixer.music.unpause()
+                    self.__musicPlaying = not self.__musicPlaying
 
         self.__screen.fill((255, 255, 255))
         for button in self.buttons:

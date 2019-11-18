@@ -80,6 +80,9 @@ class Scene():
                 if [263, 264, 265, 260, 261, 262, 257, 258, 259].index(event.key) == self.__moleNumber:
                     self.__score += 1
                     self.__moleNumber = random.randint(0, 8)
+                else:
+                    if self.__score > 0:
+                        self.__score -= 1
 
         self.__screen.fill((255, 255, 255))
         for hole in self.__moleHoles:

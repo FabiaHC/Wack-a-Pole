@@ -183,6 +183,8 @@ class TextBox():
 
 def main():
     pygame.init()
+    pygame.mixer.init()
+    pygame.mixer.music.load("assets/bensound-jazzyfrenchy.mp3")
     screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
     done = False
     pygame.display.set_caption('Wack a Pole!')
@@ -192,6 +194,7 @@ def main():
     scene.setInGameScene()
     scene.setMenuScene()
 
+    pygame.mixer.music.play(-1,0.0)
     while not done:
         events = pygame.event.get()
         done = scene.loop(events)

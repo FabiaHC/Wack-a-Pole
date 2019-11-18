@@ -7,10 +7,17 @@ class MoleHole():
         self.__height = screenY // 4 #Take up 1/4 of y width
         self.__x = ( (number)  % 3 ) * self.__width #x Blit Position
         self.__y = ( (number) // 3 ) * self.__height + self.__height #y Blit Position
-        self.rect = pygame.Rect(self.__x, self.__y, self.__width, self.__height)
+        self.__rect = pygame.Rect(self.__x, self.__y, self.__width, self.__height)
+        self.__number = number
 
     def getBlitPos(self):
         return (self.__x, self.__y)
+
+    def getRect(self):
+        return self.__rect
+
+    def getNumber(self):
+        return self.__number
 
 
 
@@ -83,6 +90,16 @@ class Scene():
                 else:
                     if self.__score > 0:
                         self.__score -= 1
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = event.pos
+                for moleHole in self.__moleHoles:
+                    if moleHole.getRect().collidepoint(x, y):
+                        if moleHole.getNumber() == self.__moleNumber:
+                            self.__score += 1
+                            self.__moleNumber = random.randint(0, 8)
+                        else:
+                            if self.__score > 0:
+                                self.__score -= 1
 
         self.__screen.fill((255, 255, 255))
         for hole in self.__moleHoles:
